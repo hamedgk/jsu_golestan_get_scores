@@ -1,6 +1,6 @@
 #### **Install requirments by:**
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ``` 
 
 
@@ -8,4 +8,4 @@ pip install requirements.txt
 
 #### Replace example credentials with your own
 
-#### If everything was successful, program gives you two files called *`scores.json`* and *`debug.json`*
+#### Run the script. if successful, program will generate two files called *`scores.json`* and *`debug.json`*
