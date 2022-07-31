@@ -2,4 +2,4 @@
 
 ### Replace example credentials with your own
 
-### If everything was successful, program gives you two file called `scores.json` and `debug.json`
+### If everything was successful, program gives you two files called `scores.json` and `debug.json`
