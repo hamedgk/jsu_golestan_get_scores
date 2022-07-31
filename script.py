@@ -15,20 +15,19 @@ def yes_or_no_question(question, default_no=True):
         return False if default_no else True
 
 
-
-api = "http://cm.jsu.ac.ir/api/v1";
+api = "http://cm.jsu.ac.ir/api/v1"
 
 with open('config.json') as configs_raw:
-    configs_json = json.load(configs_raw);
+    configs_json = json.load(configs_raw)
 
 
 configs_json = configs_json['credentials']
 
 
-#sends verification code to your phone number
+# sends verification code to your phone number
 login_by_phone_json = requests.post(
     f"{api}/login_by_phone",
-    params={"phone_number":configs_json["phone_number"]}
+    params={"phone_number": configs_json["phone_number"]}
 ).json()
 
 
@@ -38,30 +37,31 @@ session_id = login_by_phone_json['session_id']
 verification_code = input("Enter verification code sent to you: ")
 
 
-#send verification code and server returns token
+# send verification code and server returns token
 verification_code_res = requests.post(
     f"{api}/login_send_verification_code",
     params={"session_id": session_id, "verification_code": verification_code}
 ).json()
 
 
-#write debugging information into file with ut8 encoding
+# write debugging information into file with ut8 encoding
 with open('debug.json', 'w', encoding='utf8') as debug_output:
-    json.dump(verification_code_res, debug_output, indent=4, ensure_ascii=False);
+    json.dump(verification_code_res, debug_output,
+              indent=4, ensure_ascii=False)
 print("generated debug.json ...")
 
 
 token = verification_code_res['token']
 
 
-#prepare headers specially token
+# prepare headers specially token
 headers = CaseInsensitiveDict()
 headers["Accept"] = "application/json"
 headers["Authorization"] = f"Bearer {token}"
 headers["Content-Type"] = "application/json"
 
 
-#send token and password and server returns scores
+# send token and password and server returns scores
 scores = requests.post(
     f"{api}/get_scores_by_password",
     headers=headers,
@@ -69,15 +69,13 @@ scores = requests.post(
 ).json()
 
 
-
-#write scores to json file with ut8 encoding
+# write scores to json file with ut8 encoding
 with open('scores.json', 'w', encoding='utf8') as scores_output:
-    json.dump(scores, scores_output, indent=4, ensure_ascii=False);
+    json.dump(scores, scores_output, indent=4, ensure_ascii=False)
 print("generated scores.json ...")
 
 
-
-#logout
+# logout
 if yes_or_no_question("Would you like to logout?"):
     logout_res = requests.post(
         f"{api}/logout",
@@ -85,4 +83,3 @@ if yes_or_no_question("Would you like to logout?"):
     )
     if logout_res.status_code == 200:
         print("Logout Successful")
-    
