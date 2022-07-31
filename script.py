@@ -50,7 +50,7 @@ verification_code_res = requests.post(
 #write debugging information to file with ut8 encoding
 with open('debug.json', 'w', encoding='utf8') as debug_output:
     json.dump(verification_code_res, debug_output, indent=4, ensure_ascii=False);
-
+print("generated debug.json ...")
 
 
 token = verification_code_res['token']
@@ -72,10 +72,10 @@ scores = requests.post(
 
 
 
-#write json to file with ut8 encoding
+#write scores to json file with ut8 encoding
 with open('scores.json', 'w', encoding='utf8') as scores_output:
     json.dump(scores, scores_output, indent=4, ensure_ascii=False);
-
+print("generated scores.json ...")
 
 
 #-----------------------------------------------------------------------------------------------------
