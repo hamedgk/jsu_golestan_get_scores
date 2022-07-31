@@ -25,18 +25,16 @@ with open('config.json') as configs_raw:
 configs_json = configs_json['credentials']
 
 
-#sends verification code to your phone
+#sends verification code to your phone number
 login_by_phone_json = requests.post(
     f"{api}/login_by_phone",
     params={"phone_number":configs_json["phone_number"]}
 ).json()
 
 
-#obtain session id and save for later usage
 session_id = login_by_phone_json['session_id']
 
 
-#self explanatory!
 verification_code = input("Enter verification code sent to you: ")
 
 
@@ -47,7 +45,7 @@ verification_code_res = requests.post(
 ).json()
 
 
-#write debugging information to file with ut8 encoding
+#write debugging information into file with ut8 encoding
 with open('debug.json', 'w', encoding='utf8') as debug_output:
     json.dump(verification_code_res, debug_output, indent=4, ensure_ascii=False);
 print("generated debug.json ...")
@@ -78,8 +76,8 @@ with open('scores.json', 'w', encoding='utf8') as scores_output:
 print("generated scores.json ...")
 
 
-#-----------------------------------------------------------------------------------------------------
 
+#logout
 if yes_or_no_question("Would you like to logout?"):
     logout_res = requests.post(
         f"{api}/logout",
